@@ -1,0 +1,61 @@
+name: Blinky
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container: ghcr.io/zephyrproject-rtos/ci:v0.26.2
+    env:
+      CMAKE_PREFIX_PATH: /opt/toolchains
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Test 1
+        run: |
+          pwd
+          ls -lah
+
+      - name: Initialize
+        run: |
+          west init -l --mf west.yml .
+          west update
+      
+      - name: Test 2
+        run: |
+          pwd
+          ls -lah
+
+      - name: Build
+        run: |
+          west build -b nrf52dk_nrf52832 . -p
+
+      - name: Create FW archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware
+          path: build/zephyr/zephyr.*
+
+
+
+
+
+      # - name: Clean build
+      #   run: |
+      #     pwd
+      #     ls -lah
+      #     where west
+      #     # docker run --rm -v ${PWD}:/workdir/project nrfconnect-sdk \
+      #     west build -b nrf52dk_nrf52832 . -p
+
+      # - name: Create build tarball
+      #   run: |
+      #     tar czf build.tar.gz build/zephyr/zephyr.hex
+      
+      # - name: Upload tarball
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: build.tar.gz
+      #     path: build.tar.gz

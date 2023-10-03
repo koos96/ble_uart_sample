@@ -1,0 +1,16 @@
+manifest:
+  remotes:
+    - name: ncs
+      url-base: https://github.com/nrfconnect
+  
+  projects:
+    - name: nrf
+      remote: ncs
+      repo-path: sdk-nrf
+      revision: v2.4.2
+      import:
+        name-blocklist:
+          - homekit
+          - loramac-node
+          - matter
+          - openthread

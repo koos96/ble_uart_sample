@@ -299,7 +299,7 @@ static int uart_init(void)
 
 	if (tx) {
 		pos = snprintf(tx->data, sizeof(tx->data),
-			       "Starting Nordic UART service example\r\n");
+			       "Starting Nordic UART service github\r\n");
 
 		if ((pos < 0) || (pos >= sizeof(tx->data))) {
 			k_free(rx);
